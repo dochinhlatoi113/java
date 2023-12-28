@@ -47,4 +47,8 @@ public class CustomerService {
 
         return false;
     }
+
+    public List<Customer> findCustomers(String keyword) {
+        return cRepository.searchCustomer(keyword);
+    }
 }

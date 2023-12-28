@@ -37,10 +37,16 @@ public class CustomerController {
     @Autowired
     private CustomerService cService;
 
-    // @RequestMapping(value = "/customer/show", method = RequestMethod.POST)
-    @GetMapping("/show")
-    public List<Customer> list() {
-        return cService.getAll();
+    @RequestMapping(value = "/show", method = RequestMethod.GET)
+    public ResponseEntity<?> list(@RequestParam(required = false, name = "keyword") String searchTerm) {
+        if (searchTerm == null) {
+            List<Customer> customers = cService.getAll();
+            return ResponseEntity.ok(customers);
+        } else {
+            List iteList = cService.findCustomers(searchTerm);
+            return ResponseEntity.ok(iteList);
+        }
+
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -140,4 +146,5 @@ public class CustomerController {
         }
 
     }
+
 }
